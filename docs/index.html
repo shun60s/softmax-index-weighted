@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>損失関数 Softmax Index Weighted</title>
+<meta name="description" content="Chainerを使った自作の損失関数の実装" />
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-lg px-3 my-5 markdown-body">
+<h1>損失関数 Softmax Index Weighted</h1>
+
+<h2>概要  </h2>
+
+<p>Chainerを使った自作の損失関数の実装。<br />
+損失関数としては失敗作。<br /></p>
+
+<p><a href="https://github.com/shun60s/softmax-index-weighted/">github repository</a><br /></p>
+
+<h2>損失関数 Softmax Index Weighted   </h2>
+
+<h3>定義  </h3>
+<p><img src="softmax_index_weighted.png" alt="softmax-index-weighted" ><br /></p>
+
+<h3>式の意味  </h3>
+
+<p>音の波形を、量子化したone hotを入力して予測するとき、
+損失関数 Softmax Cross Entropyでは、正解の１要素しか評価されない。 
+音としてはできるだけ近い振幅値(indexが近い)に予想されるように、
+振幅が近いほど損失値が小さくなるような評価式を考案してみた。<br /></p>
+
+
+<h2>実験  </h2>
+
+<p>WaveNet<a href="https://github.com/chainer/chainer/tree/master/examples/wavenet">Chainer-Examples-WaveNet</a>を使った。これに損失関数を追加し、変更を加えた。　データは、非常に少ないが、お試しとして、wav of Pannouの中の140個（約130秒分）を使った。<br />
+下図が損失と正解率の結果である。　４ iteration毎に描いていて、値が大きくばらついているため、波形がギザギサになっている。<br /></p>
+
+<p><img src="loss.png" alt="loss" ><br />
+<img src="accuracy.png" alt="accuracy" ><br /></p>
+
+<p>下図は比較のため、同じモデル構成と同じデータを使って損失関数にSoftmax Cross Entropyの場合の結果である。<br />
+<img src="Softmax_cross_entropy_loss_accuracy.png" alt="softmax_cross_entropy" ><br /></p>
+
+<p>損失関数としてSoftmax Index Weightedを使った場合は正解率が全然向上していない。<br />
+この理由は、Softmax Index Weightedでは、局所的に損失がボトムになるところ（局所最適）がいたるところにあって、ターゲットに落ち込まないためと考えられる。<br /></p>
+
+<h2>参考にしたもの  </h2>
+
+<ul>
+<li><a href="https://chainer-colab-notebook.readthedocs.io/ja/latest/notebook/official_example/wavenet.html">chainer-colab-notebook, Synthesize Human Speech with WaveNet</a></li>
+<li><a href="https://github.com/chainer/chainer/tree/master/examples/wavenet">chainer-examples-wavnet</a></li>
+<li><a href="https://github.com/AKBoles/Deep-Learning-Speech-Recognition/blob/master/Pannous-Walkthrough.md">wav of Pannous, Description</a></li>
+<li><a href="https://github.com/musyoku/wavenet/blob/master/train_audio/train.py">receptive field width, calculation method, by musyoku</a>
+</li></ul>
+
+<h2>ライセンス  </h2>
+
+Chainerに関係するライセンスについては, docsの中のLICENSE-chainer.txtを見てください。<br />
+
+
+<br />
+<br />
+<br />
+
+
+
+</div>
+</body>
+</html>

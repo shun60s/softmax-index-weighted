@@ -1,0 +1,11 @@
+/__pycache__/
+/wav100/
+/result/
+/result_softmax_cross_entropy/
+/old/
+*.bat
+*.sh
+*.pyc
+*.md~
+*.py~
+*.*~
